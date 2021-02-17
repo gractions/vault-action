@@ -53,6 +53,19 @@ inputs:
     description: 'When set to true, disables verification of the Vault server certificate.  Setting this to true in production is not recommended.'
     required: false
     default: "false"
+  role:
+    description: 'JWT auth role'
+    required: false
+  privateKey:
+    description: 'Private key to sign JWT'
+    required: false
+  keyPassword:
+    description: 'Password for key stored in privateKey (if needed)'
+    required: false
+  jwtTtlSec:
+    description: 'Time in seconds, after which token expires'
+    required: false
+    default: 3600
 runs:
   using: 'node12'
   main: 'dist/index.js'

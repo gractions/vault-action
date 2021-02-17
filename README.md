@@ -79,6 +79,17 @@ with:
   githubToken: ${{ secrets.GITHUB_TOKEN }}
   caCertificate: ${{ secrets.VAULTCA }}
 ```
+- **jwt**: you must provide a `role` & `privateKey` parameters, additionally you can pass `keyPassword` & `jwtTtlSec` parameters
+```yaml
+...
+with:
+  url: https://vault.mycompany.com:8200
+  method: jwt
+  role: github-action
+  privateKey: ${{ secrets.JWT_PRIVATE_KEY }}
+  keyPassword: ${{ secrets.JWT_KEY_PASS }}
+  jwtTtlSec: 3600 # 1 hour, default value
+```
 
 If any other method is specified and you provide an `authPayload`, the action will attempt to `POST` to `auth/${method}/login` with the provided payload and parse out the client token.
 
@@ -247,6 +258,10 @@ Here are all the inputs available through `with`:
 | `roleId`            | The Role Id for App Role authentication                                                                                                              |         |          |
 | `secretId`          | The Secret Id for App Role authentication                                                                                                            |         |          |
 | `githubToken`       | The Github Token to be used to authenticate with Vault                                                                                               |         |          |
+| `role`              | Vault role for JWT auth method                                                                                                                       |         |          |
+| `privateKey`        | RSA private key for JWT signing                                                                                                                      |         |          |
+| `keyPassword`       | Password for privateKey (if needed)                                                                                                                  |         |          |
+| `jwtTtlSec`         | Time To Live for generetad JWT                                                                                                                       |         | 3600     |
 | `authPayload`       | The JSON payload to be sent to Vault when using a custom authentication method.                                                                      |         |          |
 | `extraHeaders`      | A string of newline separated extra headers to include on every request.                                                                             |         |          |
 | `exportEnv`         | Whether or not export secrets as environment variables.                                                                                              | `true`  |          |
